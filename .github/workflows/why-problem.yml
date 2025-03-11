@@ -1,0 +1,23 @@
+name: Why grep error in workflow # worflow name
+
+on: [push] # event
+
+jobs:
+  why-problem:
+    runs-on: ubuntu-latest # runner version
+
+    steps:
+        - name: create file
+          run: echo 'a1 , a2 , a3' > a.txt
+    
+        - name: simple grep found
+          run: |
+            grep a1 a.txt
+            echo "grep found exit code: $?"
+            echo 'after grep found'
+    
+        - name: simple grep not found
+          run: | 
+            grep a4 a.txt  
+            echo "grep not found exit code: $?"
+            echo 'after grep not found'    
