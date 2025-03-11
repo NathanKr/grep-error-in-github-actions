@@ -1,0 +1,37 @@
+name: Solution for non zero code in bash based workflow # worflow name
+
+on: [push] # event
+
+jobs:
+  solution-non-zero-code:
+    runs-on: ubuntu-latest # runner version
+
+    steps:
+      - name: create file
+        run: echo 'a1 , a2 , a3' > a.txt
+
+      - name: run grep and check result - pattern not found
+        run: |
+          set +e # disables the behavior, allowing the script to continue executing even if a command returns a non-zero exit code
+          grep a4 a.txt
+          EXIT_CODE=$?
+          set -e  # enables the behavior where any command that returns a non-zero exit code will cause the script to exit immediately. 
+          echo "Exit code: $EXIT_CODE"
+          if [ $EXIT_CODE -eq 0 ]; then
+            echo "Pattern found"
+          else
+            echo "Pattern not found"
+          fi
+
+      - name: run grep and check result - pattern found
+        run: |
+          set +e # disables the behavior, allowing the script to continue executing even if a command returns a non-zero exit code
+          grep a3 a.txt
+          EXIT_CODE=$?
+          set -e  # enables the behavior where any command that returns a non-zero exit code will cause the script to exit immediately. 
+          echo "Exit code: $EXIT_CODE"
+          if [ $EXIT_CODE -eq 0 ]; then
+            echo "Pattern found"
+          else
+            echo "Pattern not found"
+          fi

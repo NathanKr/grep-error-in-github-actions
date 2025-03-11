@@ -1,12 +1,22 @@
 <h1>Project Name</h1>
-grep error in github actions
+handle non zero exit code in github actions bash
 
 
 <h2>Project Description</h2>
-....
+The project has three workflows with self descriptive names
+
+<ol>
+<li>show-problem.yml</li>
+<li>why-problem.yml</li>
+<li>solution.yml</li>
+</ol>
 
 <h2>Motivation</h2>
 You are using grep in your github actions workflow. You are looking for something using grep. sometime you find it and some time you dont , when you dont you get error and the step flow does stops  - how to handle this ?
+
+Altough i use here grep this repo is not just for grep but for any bash command with non zero code that is not an error
+
+
 
 <h2>Installation</h2>
 Non required unless you want to use act - check <a href='#ref2'>[2]</a>
@@ -17,16 +27,22 @@ via push to github or act
 
 
 <h2>Technologies Used</h2>
-github actions
-act
-
+<ul>
+<li>github actions</li>
+<li>act</li>
+<li>bash</li>
+</ul>
 
 <h2>Design</h2>
-....
+Bottom line is to suround bash command that is success but might return non zero code with set +e \ set -e
+
+```bash
+set +e
+.... 
+set -e
+```
 
 
-<h2>Code Structure</h2>
-....
 
 <h2>Demo</h2>
 
@@ -95,11 +111,39 @@ And you will see in the following image that when grep is success its return cod
 
 The issue is that github actions regard non zero code as fail in bash , check <a href='https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions?form=MG0AV3#exit-codes-and-error-action-preference'>here</a>
 
-<h2>Points of Interest</h2>
-<ul>
-    <li>...</li>
-   
-</ul>
+
+<h3>Solution</h3>
+
+given solution.yml
+
+```yml
+    steps:
+      - name: create file
+        run: echo 'a1 , a2 , a3' > a.txt
+
+      - name: run grep and check result - pattern not found
+        run: |
+          set +e # disables the behavior, allowing the script to continue executing even if a command returns a non-zero exit code
+          grep a4 a.txt
+          EXIT_CODE=$?
+          set -e  # enables the behavior where any command that returns a non-zero exit code will cause the script to exit immediately. 
+          echo "Exit code: $EXIT_CODE"
+          if [ $EXIT_CODE -eq 0 ]; then
+            echo "Pattern found"
+          else
+            echo "Pattern not found"
+          fi
+```
+
+
+invoke
+
+```bash
+act -j solution-non-zero-code
+```
+
+And you will see in the following image that the workflow continue when grep find the pattern (code 0) and also when grep do not find the pattern (code 1)
+
 
 <h2>References</h2>
 <ul>
