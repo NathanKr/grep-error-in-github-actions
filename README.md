@@ -1,5 +1,5 @@
 <h1>Project Name</h1>
-handle non zero exit code in github actions bash
+Handle non zero exit code in github actions bash
 
 
 <h2>Project Description</h2>
@@ -12,7 +12,7 @@ The project has three workflows with self descriptive names
 </ol>
 
 <h2>Motivation</h2>
-You are using grep in your github actions workflow. You are looking for something using grep. sometime you find it and some time you dont , when you dont you get error and the step flow does stops  - how to handle this ?
+You are using grep in your github actions workflow. You are looking for something using grep. sometime you find it and some time you dont , when you dont you get error and the workflow stops  - how to handle this ?
 
 Altough i use here grep this repo is not just for grep but for any bash command with non zero code that is not an error
 
@@ -44,8 +44,15 @@ set -e
 
 
 
-<h2>Demo</h2>
+<h2>Demo and Code</h2>
 
+In the following image you can see the run of the three workflows :
+<ul>
+<li>in green solution.yml</li>
+<li>in brown why-problem.yml</li>
+<li>in orange show-problem.yml</li>
+</ul>
+<img src='./figs/demo.png' />
 
 <h3>Show problem</h3>
 
@@ -72,7 +79,7 @@ invoke
 act -j show-problem
 ```
 
-And you will see in the following image that `echo 'after grep not found' is not shown because grep not dound issue and error
+And you will see in the following image that `echo 'after grep not found' is not shown because grep not found issue and error
 
 <img src='./figs/show-problem.png' />
 
@@ -146,9 +153,9 @@ And you will see in the following image that the workflow continue when grep fin
 
 
 <h2>References</h2>
-<ul>
+<ol>
     <li id='ref1'><a href='https://www.youtube.com/watch?v=x239z6DdE0A'>Introduction to GitHub Actions: Learn Workflows with Examples </a></li>
-    <li id='ref2'><a href='https://www.youtube.com/watch?v=Mir-uLSQmwA'>Efficiently Run GitHub Actions Workflows Locally with act Tool </a></li>
+    <li id='ref2'><a href='https://www.youtube.com/watch?v=Mir-olSQmwA'>Efficiently Run GitHub Actions Workflows Locally with act Tool </a></li>
     <li id='ref3'><a href='https://www.youtube.com/watch?v=sEBGmPZh75U'>Simplified CI/CD Workflow with GitHub Actions </a></li>
-</ul>
+</ol>
 
